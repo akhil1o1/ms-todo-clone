@@ -3,7 +3,6 @@ import {AppBar, Box, CssBaseline, Drawer, IconButton, Toolbar, Typography, TextF
 import MenuIcon from '@mui/icons-material/Menu';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Navigation from './Navigation';
-
 import Todos from '../Todos/Todos';
 
 const drawerWidth = 240;
@@ -42,8 +41,8 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h5" mr="10px" fontWeight="600" noWrap component="div">
-            Todo 
+          <Typography variant="h6" mr="10px" fontWeight="600" noWrap component="div">
+            To Do 
           </Typography>
           <DoneAllIcon fontSize="large" />
           <Box pl="50px">
@@ -57,14 +56,13 @@ function ResponsiveDrawer(props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

@@ -2,7 +2,7 @@ import React from "react";
 import {Box, TextField, Button, Divider} from "@mui/material";
 
 function AddTask() {
-    return <Box width="95%" className="add-task"
+    return <Box className="add-task"
     sx={{backgroundColor:"#ffffff", 
     paddingBlock:"5px",
     borderRadius:"5px"
@@ -11,7 +11,7 @@ function AddTask() {
     <Divider orientation="horizontal"/>
     <Box py="4px" px="20px"
     sx={{display:"flex", justifyContent:"space-between"}}>
-    <label>Add a due date <input type="date"/></label>
+    <label>Add a due date <input name="due date" className="date-input" type="date"/></label>
     <Button className="add-button" color="inherit" variant="contained">Add</Button>
     </Box>
     </Box>
