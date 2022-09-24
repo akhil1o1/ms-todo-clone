@@ -12,7 +12,7 @@ function Task() {
         setEditing((prev)=> !prev);
     }
 
-    return <Box onClick={handleEditClick} className="task" mt="10px" py="10px" px="15px" >
+    return <Box onClick={handleEditClick} className="task" mt="10px" py="7px" px="15px" >
     <Box display="flex" alignItems="center" justifyContent="space-between">
     <Stack direction="row" spacing={2}>
         <CheckCircleOutlineOutlinedIcon className="icon"/>

@@ -4,16 +4,19 @@ import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 function Navigation() {
 
     const listNames = [
         {name : "MyDay", icon : <WbSunnyOutlinedIcon/> },
         {name : "Important", icon : <StarBorderOutlinedIcon/> },
+        {name : "Planned", icon : <CalendarMonthOutlinedIcon/>},
+        {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},
+        {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>},
         {name : "Tasks", icon : <AssignmentOutlinedIcon/> },
-        {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>}
-      ]    
+      ];  
 
     return <>
         <div>
