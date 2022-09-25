@@ -1,18 +1,19 @@
 import Todo from "../model/todo.js";
 
-export const getTodos = ()=>{
+export const getTodos = async (req, res)=>{
+    const todos = await Todo.find({});
+    res.json(todos);
+};
+
+export const postTodo = (req, res)=>{
 
 };
 
-export const postTodo = ()=>{
+export const editTodo = (req, res)=>{
 
 };
 
-export const editTodo = ()=>{
-
-};
-
-export const deleteTodo = ()=>{
+export const deleteTodo = (req, res)=>{
 
 };
 

@@ -17,22 +17,22 @@ mongoose.connect(process.env.MONGODB_URI)
 .then(()=> console.log("database connected"))
 .catch((err)=> console.log(err));
 
-// //////////////////
-// const todo1= new Todo({
-//     text: "todo frontend",
-//     description: "complete the todo frontend by tonight",
-//     category: "planned",
-//     completed: true
-// });
+//////////////////
+const todo1= new Todo({
+    text: "get todos api",
+    description: "create get all todos api",
+    category: "My day",
+    important: true
+});
 
-// todo1.save((err)=> {
-//     if(!err){
-//         console.log("document saved");
-//     }else{
-//         console.log(err);
-//     }
-// });
-
+todo1.save((err)=> {
+    if(!err){
+        console.log("document saved");
+    }else{
+        console.log(err);
+    }
+});
+ 
 app.listen(process.env.PORT, ()=>{
     console.log(`server is listening at port ${process.env.PORT}`);
 });
