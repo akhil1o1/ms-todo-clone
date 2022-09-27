@@ -10,7 +10,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 function Navigation() {
 
     const listNames = [
-        {name : "MyDay", icon : <WbSunnyOutlinedIcon/> },
+        {name : "My Day", icon : <WbSunnyOutlinedIcon/> },
         {name : "Important", icon : <StarBorderOutlinedIcon/> },
         {name : "Planned", icon : <CalendarMonthOutlinedIcon/>},
         {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},
