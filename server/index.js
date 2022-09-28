@@ -25,13 +25,13 @@ const todo1= new Todo({
     important: true
 });
 
-todo1.save((err)=> {
-    if(!err){
-        console.log("document saved");
-    }else{
-        console.log(err);
-    }
-});
+// todo1.save((err)=> {
+//     if(!err){
+//         console.log("document saved");
+//     }else{
+//         console.log(err);
+//     }
+// });
  
 app.listen(process.env.PORT, ()=>{
     console.log(`server is listening at port ${process.env.PORT}`);
