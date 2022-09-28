@@ -4,7 +4,7 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 
-function Task() {
+function Task({text, category, description, dueDate, important, completed}) {
 
     const [editing, setEditing] = useState(false);
 
@@ -16,14 +16,18 @@ function Task() {
     <Box display="flex" alignItems="center" justifyContent="space-between">
     <Stack direction="row" spacing={2}>
         <CheckCircleOutlineOutlinedIcon className="icon"/>
-        <Typography variant="body1">test</Typography>
+        <Typography variant="body1">{text}</Typography>
     </Stack>
         <IconButton><StarBorderOutlinedIcon className="icon"/></IconButton>
     </Box>
-    {editing && <Box py="20px" px="15px" display="flex" justifyContent="space-between">
-        <Typography>Added to my day</Typography>
-        <Typography>Due date</Typography>
-        <Typography>Delete</Typography>
+    {editing && <Box py="5px" px="15px">
+    {description && <Box my="10px">
+        <Typography variant="body1">Description : {description}</Typography>
+    </Box>}
+    <Box  display="flex" justifyContent="space-between">
+    <Typography>Added to : {category}</Typography>
+    {dueDate && <Typography>Due date : {dueDate}</Typography>}
+    </Box>  
     </Box>}
     </Box>
 }

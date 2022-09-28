@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {AppBar, Box, CssBaseline, Drawer, IconButton, Toolbar, Typography, TextField} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -9,14 +9,13 @@ const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [category, setCategory] = useState("My day"); 
 
   
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  
 
   const container = window !== undefined ? () => window().document.body : undefined;
 

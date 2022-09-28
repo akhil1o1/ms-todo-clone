@@ -1,5 +1,5 @@
 import express from "express";
-const router = express.Router();///////////////match with expenses.js routes in case of error
+const router = express.Router();
 import {getTodos, postTodo, editTodo, deleteTodo} from "../controllers/todos.js";
 
 router.get("/", getTodos);

@@ -42,7 +42,10 @@ export const editTodo = (req, res)=>{
     })
 };
 
-export const deleteTodo = (req, res)=>{
-
+export const deleteTodo = async (req, res)=>{
+    const id = req.params.id;
+    console.log(id);
+    const response = await Todo.findByIdAndDelete(id);
+    res.json(response);
 };
 
