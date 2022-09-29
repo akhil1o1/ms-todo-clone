@@ -68,7 +68,7 @@ function ResponsiveDrawer(props) {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
-          <Navigation/>
+          <Navigation category={category} setCategory={setCategory}/>
         </Drawer>
         <Drawer
           variant="permanent"
@@ -78,7 +78,7 @@ function ResponsiveDrawer(props) {
           }}
           open
         >
-          <Navigation/>
+          <Navigation category={category} setCategory={setCategory}/>
         </Drawer>
       </Box>
       <Box
@@ -86,7 +86,7 @@ function ResponsiveDrawer(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <Todos/>
+        <Todos category={category}/>
       </Box>
     </Box>
   );

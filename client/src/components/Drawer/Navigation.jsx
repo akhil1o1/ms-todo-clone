@@ -7,7 +7,12 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
-function Navigation() {
+function Navigation({category, setCategory}) {
+
+  function handleClick(listname) {
+    setCategory(listname);
+  }
+
 
     const listNames = [
         {name : "My Day", icon : <WbSunnyOutlinedIcon/> },
@@ -25,8 +30,8 @@ function Navigation() {
       <List>
         {listNames.map((list, index) => (
           <ListItem key={list.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
+            <ListItemButton className={category===list.name ? "slected-category" : " "} onClick={()=> handleClick(list.name)}>
+              <ListItemIcon className={category===list.name ? "slected-category-icon" : " "}>
                 {list.icon}
               </ListItemIcon>
               <ListItemText primary={list.name} />

@@ -9,6 +9,16 @@ body{
     display: none;
   }
 
+
+.slected-category{
+    background-color: #1976d2 !important; 
+    color: #ffffff !important;
+}
+
+.slected-category-icon{
+    color: #ffffff !important;
+}
+
 .add-task{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -28,11 +38,14 @@ body{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
     background-color: #ffffff;
-    cursor: pointer;
 }
 .icon{
     color: #757575;
 }
 .task:hover{
     background-color: #f3f2f1;
+}
+.editTask{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 5px;
 }

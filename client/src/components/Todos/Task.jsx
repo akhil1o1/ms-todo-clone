@@ -1,32 +1,61 @@
 import React, {useState} from "react";
-import { Box, Stack, Typography, IconButton} from '@mui/material';
+import { Box, Stack, Typography, IconButton, Tooltip} from '@mui/material';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import StarIcon from '@mui/icons-material/Star';
+import EditIcon from '@mui/icons-material/Edit';
+import DateFormatter from "./DateFormatter";
+
+function Task({text, category, description, dueDate, important, completed, entryDate, setEditTask}) {
+
+    const [expand, setExpand] = useState(false);
+    console.log(expand); 
 
 
-function Task({text, category, description, dueDate, important, completed}) {
-
-    const [editing, setEditing] = useState(false);
-
-    function handleEditClick() {
-        setEditing((prev)=> !prev);
+    function handleExpandClick() {
+        setExpand((prev)=> !prev);
     }
 
-    return <Box onClick={handleEditClick} className="task" mt="10px" py="7px" px="15px" >
+    function handleEditClick() {
+        setEditTask((prev)=> !prev);
+    }
+
+    return <Box className="task" mt="10px" py="7px" px="15px" >
     <Box display="flex" alignItems="center" justifyContent="space-between">
-    <Stack direction="row" spacing={2}>
-        <CheckCircleOutlineOutlinedIcon className="icon"/>
-        <Typography variant="body1">{text}</Typography>
+    <Stack direction="row" alignItems="center" spacing={2}>
+    <Tooltip title={completed ? "Mark as incomplete" : "Mark as complete"} placement="bottom">
+    <IconButton>
+    {
+        completed ? <CheckCircleIcon className="icon"/>
+        :  <CheckCircleOutlineOutlinedIcon className="icon"/>
+    }
+    </IconButton>
+    </Tooltip>
+    <Typography sx={{cursor:"pointer"}} onClick={handleExpandClick} >{text}</Typography>
     </Stack>
-        <IconButton><StarBorderOutlinedIcon className="icon"/></IconButton>
+    <Tooltip title={important ? "Remove importance" : "Mark as important"} placement="bottom">
+    <IconButton>
+        {
+            important ? <StarIcon className="icon"/>  
+             :<StarBorderOutlinedIcon className="icon"/>
+        }
+    </IconButton>
+    </Tooltip>
     </Box>
-    {editing && <Box py="5px" px="15px">
-    {description && <Box my="10px">
-        <Typography variant="body1">Description : {description}</Typography>
+    {expand && <Box py="5px" >
+    {description && <Box my="10px" display="flex" alignItems="center" justifyContent="space-between">
+        <Typography>Description : {description}</Typography>
+        <Tooltip title="Edit task">
+        <IconButton onClick={handleEditClick}>
+            <EditIcon className="icon"/>
+        </IconButton>
+        </Tooltip>
     </Box>}
     <Box  display="flex" justifyContent="space-between">
     <Typography>Added to : {category}</Typography>
-    {dueDate && <Typography>Due date : {dueDate}</Typography>}
+    {dueDate && <DateFormatter label={"Due Date"} date={dueDate}/>}
+    <DateFormatter date={entryDate} label={"Added at"}/>
     </Box>  
     </Box>}
     </Box>
