@@ -10,9 +10,10 @@ import EditTask from "./EditTask";
 function Todos({category}) {
 
     const [todos, setTodos] = useState([]);
-    const [editTask, setEditTask] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [editedTask, setEditedTask] = useState({});
 
-    console.log(editTask); 
+    console.log(editedTask); 
 
     const API_BASE = "http://localhost:5000/todos/";
 
@@ -27,7 +28,7 @@ function Todos({category}) {
     },[]);
     
 
-    return<Box sx={{display: editTask ? "flex" : "block", gap: editTask ? "20px" : "none"}}> 
+    return<Box sx={{display: edit ? "flex" : "block", gap: edit ? "20px" : "none"}}> 
         <Box width="95%">
         <Box mb="20px" display="flex" justifyContent="space-between">
         <Stack>
@@ -41,7 +42,8 @@ function Todos({category}) {
             <Task
                 key={nanoid()}
                 text={todo.text}
-                setEditTask={setEditTask}
+                setEdit={setEdit}
+                setEditedTask={setEditedTask}
                 category={todo.category}
                 entryDate={todo.entryDate}
                 dueDate={todo.dueDate}
@@ -52,7 +54,7 @@ function Todos({category}) {
         ))}
     </Box>
     {
-        editTask && <EditTask/>
+        edit && <EditTask editedTask={editedTask} setEditedTask={setEditedTask}/>
     }
     </Box>
 }

@@ -7,18 +7,17 @@ import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import DateFormatter from "./DateFormatter";
 
-function Task({text, category, description, dueDate, important, completed, entryDate, setEditTask}) {
+function Task({text, category, description, dueDate, important, completed, entryDate, setEdit, setEditedTask}) {
 
     const [expand, setExpand] = useState(false);
-    console.log(expand); 
-
 
     function handleExpandClick() {
         setExpand((prev)=> !prev);
     }
 
     function handleEditClick() {
-        setEditTask((prev)=> !prev);
+        setEdit((prev)=> !prev);
+        setEditedTask({text, category, description, dueDate, important, completed, entryDate, setEdit, setEditedTask});
     }
 
     return <Box className="task" mt="10px" py="7px" px="15px" >
