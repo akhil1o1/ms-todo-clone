@@ -10,7 +10,7 @@ import EditTask from "./EditTask";
 function Todos({category}) {
 
     const [todos, setTodos] = useState([]);
-    const [edit, setEdit] = useState(false);
+    const [showEditPane, setShowEditPane] = useState(false);
     const [editedTask, setEditedTask] = useState({});
 
     console.log(editedTask); 
@@ -28,7 +28,7 @@ function Todos({category}) {
     },[]);
     
 
-    return<Box sx={{display: edit ? "flex" : "block", gap: edit ? "20px" : "none"}}> 
+    return<Box sx={{display: showEditPane ? "flex" : "block", gap: showEditPane ? "20px" : "none"}}> 
         <Box width="95%">
         <Box mb="20px" display="flex" justifyContent="space-between">
         <Stack>
@@ -42,7 +42,7 @@ function Todos({category}) {
             <Task
                 key={nanoid()}
                 text={todo.text}
-                setEdit={setEdit}
+                setShowEditPane={setShowEditPane}
                 setEditedTask={setEditedTask}
                 category={todo.category}
                 entryDate={todo.entryDate}
@@ -54,7 +54,7 @@ function Todos({category}) {
         ))}
     </Box>
     {
-        edit && <EditTask editedTask={editedTask} setEditedTask={setEditedTask}/>
+        showEditPane && <EditTask setShowEditPane={setShowEditPane} editedTask={editedTask} setEditedTask={setEditedTask}/>
     }
     </Box>
 }

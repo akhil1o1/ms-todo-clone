@@ -11,7 +11,7 @@ function Navigation({category, setCategory}) {
 
   function handleClick(listname) {
     setCategory(listname);
-  }
+  };
 
 
     const listNames = [

@@ -7,18 +7,18 @@ import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import DateFormatter from "./DateFormatter";
 
-function Task({text, category, description, dueDate, important, completed, entryDate, setEdit, setEditedTask}) {
+function Task({text, category, description, dueDate, important, completed, entryDate, setShowEditPane, setEditedTask}) {
 
     const [expand, setExpand] = useState(false);
 
     function handleExpandClick() {
         setExpand((prev)=> !prev);
-    }
+    };
 
     function handleEditClick() {
-        setEdit((prev)=> !prev);
-        setEditedTask({text, category, description, dueDate, important, completed, entryDate, setEdit, setEditedTask});
-    }
+        setShowEditPane(true);
+        setEditedTask({text, category, description, dueDate, important, completed, entryDate});
+    };
 
     return <Box className="task" mt="10px" py="7px" px="15px" >
     <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -44,7 +44,7 @@ function Task({text, category, description, dueDate, important, completed, entry
     </Box>
     {expand && <Box py="5px" >
     {description && <Box my="10px" display="flex" alignItems="center" justifyContent="space-between">
-        <Typography>Description : {description}</Typography>
+        <Typography><span className="bold-text">Description</span> : {description}</Typography>
         <Tooltip title="Edit task">
         <IconButton onClick={handleEditClick}>
             <EditIcon className="icon"/>
@@ -52,7 +52,7 @@ function Task({text, category, description, dueDate, important, completed, entry
         </Tooltip>
     </Box>}
     <Box  display="flex" justifyContent="space-between">
-    <Typography>Added to : {category}</Typography>
+    <Typography variant="body2"><span className="bold-text">Added to</span> : {category}</Typography>
     {dueDate && <DateFormatter label={"Due Date"} date={dueDate}/>}
     <DateFormatter date={entryDate} label={"Added at"}/>
     </Box>  

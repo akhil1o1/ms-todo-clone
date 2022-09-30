@@ -6,10 +6,10 @@ function DateFormatter({date, label}) {
 
     if(date){
         const formatedDate = new Date(date).toLocaleDateString("en-US", options);
-        return <Typography> {label} : {formatedDate}</Typography>
+        return <Typography variant="body2"><span className="bold-text">{label}</span>  : {formatedDate}</Typography>
     }else{
         const currentDate = new Date().toLocaleDateString("en-US", options);
-        return <Typography>{label} : {currentDate}</Typography>
+        return <Typography variant="body2"><span className="bold-text">{label}</span> : {currentDate}</Typography>
     }
 }
 
