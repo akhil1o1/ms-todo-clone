@@ -15,7 +15,7 @@ function Navigation({category, setCategory}) {
 
 
     const listNames = [
-        {name : "My Day", icon : <WbSunnyOutlinedIcon/> },
+        {name : "My day", icon : <WbSunnyOutlinedIcon/> },
         {name : "Important", icon : <StarBorderOutlinedIcon/> },
         {name : "Planned", icon : <CalendarMonthOutlinedIcon/>},
         {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},

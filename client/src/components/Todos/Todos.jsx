@@ -8,9 +8,16 @@ import DateFormatter from "./DateFormatter";
 import EditTask from "./EditTask";
 
 function Todos({category}) {
+    console.log(`category: ${category}`);
 
     const [todos, setTodos] = useState([]);
     const [showEditPane, setShowEditPane] = useState(false);
+    const [newTask, setNewTask] = useState({
+        text: "",
+        category: "",
+        dueDate: "",
+        description: ""
+    });
     const [editedTask, setEditedTask] = useState({});
 
     console.log(editedTask); 
@@ -26,6 +33,46 @@ function Todos({category}) {
         };
         fetchTodos();
     },[]);
+
+
+    const addNewTask = async ()=> {
+        const task ={
+            ...newTask,
+            category: category};
+
+        const response = await fetch(API_BASE, {method: "POST", headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(task)})
+        .then(res => res.json())
+        .catch(err => console.log(`Error : ${err}`));
+
+        setTodos((prevTodos)=> (
+            [...prevTodos, response]
+        ));
+        setNewTask({
+        text: "",
+        category: "",
+        dueDate: "",
+        description: ""
+        });
+    };
+
+    
+    const saveEditedTodo = async () =>{
+        const response = await fetch(`${API_BASE}edit/${editedTask.id}`, {method: "PATCH",
+        headers: {
+        "Content-type": "application/json"
+        },
+        body: JSON.stringify(editedTask)})
+        .then(res => res.json())
+        .catch(err => console.log(`Error : ${err}`));
+
+        setTodos((prevTodos)=> {
+            const newTodos = prevTodos.filter((todo)=> todo._id!==response._id);
+            return [...newTodos, response];
+        });
+    };
     
 
     return<Box sx={{display: showEditPane ? "flex" : "block", gap: showEditPane ? "20px" : "none"}}> 
@@ -37,24 +84,36 @@ function Todos({category}) {
         </Stack>
             <Button variant="text" startIcon={<SortIcon/>}>Sort</Button>
         </Box>
-        <AddTask/>
+        <AddTask 
+        newTask={newTask} 
+        setNewTask={setNewTask}
+        addNewTask={addNewTask}
+        />
         {todos?.map((todo)=> (
             <Task
                 key={nanoid()}
+                id={todo._id}
                 text={todo.text}
-                setShowEditPane={setShowEditPane}
-                setEditedTask={setEditedTask}
                 category={todo.category}
                 entryDate={todo.entryDate}
                 dueDate={todo.dueDate}
                 completed={todo.completed}
                 important={todo.important}
                 description={todo.description}
+                setShowEditPane={setShowEditPane}
+                setEditedTask={setEditedTask}
+                saveEditedTodo={saveEditedTodo}
+                editedTask={editedTask}
             />
         ))}
     </Box>
     {
-        showEditPane && <EditTask setShowEditPane={setShowEditPane} editedTask={editedTask} setEditedTask={setEditedTask}/>
+        showEditPane && <EditTask 
+        setShowEditPane={setShowEditPane} 
+        editedTask={editedTask}
+        setEditedTask={setEditedTask}
+        saveEditedTodo={saveEditedTodo}
+        />
     }
     </Box>
 }

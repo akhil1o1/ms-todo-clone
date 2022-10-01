@@ -7,7 +7,7 @@ import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import DateFormatter from "./DateFormatter";
 
-function Task({text, category, description, dueDate, important, completed, entryDate, setShowEditPane, setEditedTask}) {
+function Task({text, id, category, description, dueDate, important, completed, entryDate, setShowEditPane, setEditedTask, editedTask, saveEditedTodo}) {
 
     const [expand, setExpand] = useState(false);
 
@@ -15,16 +15,31 @@ function Task({text, category, description, dueDate, important, completed, entry
         setExpand((prev)=> !prev);
     };
 
-    function handleEditClick() {
+    function handleEditPaneClick() {
         setShowEditPane(true);
-        setEditedTask({text, category, description, dueDate, important, completed, entryDate});
+        setEditedTask({text, id, category, description, dueDate, important, completed, entryDate});
     };
+
+    // function toggleIcon(buttonName) {
+    //     setEditedTask((prevEditedTask)=> (
+    //         {
+    //             ...prevEditedTask,
+    //             [buttonName] : buttonName==="completed" ? !editedTask.completed : !editedTask.important
+    //         }
+    //     ));
+    // };
+
+    // function handleTaskIconClick(buttonName){
+    //     console.log(`buttonName : ${buttonName}`);
+    //     setEditedTask({text, id, category, description, dueDate, important, completed, entryDate});
+    //     toggleIcon(buttonName);
+    // }
 
     return <Box className="task" mt="10px" py="7px" px="15px" >
     <Box display="flex" alignItems="center" justifyContent="space-between">
     <Stack direction="row" alignItems="center" spacing={2}>
     <Tooltip title={completed ? "Mark as incomplete" : "Mark as complete"} placement="bottom">
-    <IconButton>
+    <IconButton onClick={()=> handleTaskIconClick("completed")}>
     {
         completed ? <CheckCircleIcon className="icon"/>
         :  <CheckCircleOutlineOutlinedIcon className="icon"/>
@@ -34,7 +49,7 @@ function Task({text, category, description, dueDate, important, completed, entry
     <Typography sx={{cursor:"pointer"}} onClick={handleExpandClick} >{text}</Typography>
     </Stack>
     <Tooltip title={important ? "Remove importance" : "Mark as important"} placement="bottom">
-    <IconButton>
+    <IconButton onClick={()=> handleTaskIconClick("important")}>
         {
             important ? <StarIcon className="icon"/>  
              :<StarBorderOutlinedIcon className="icon"/>
@@ -46,7 +61,7 @@ function Task({text, category, description, dueDate, important, completed, entry
     {description && <Box my="10px" display="flex" alignItems="center" justifyContent="space-between">
         <Typography><span className="bold-text">Description</span> : {description}</Typography>
         <Tooltip title="Edit task">
-        <IconButton onClick={handleEditClick}>
+        <IconButton onClick={handleEditPaneClick}>
             <EditIcon className="icon"/>
         </IconButton>
         </Tooltip>

@@ -7,9 +7,10 @@ import StarIcon from '@mui/icons-material/Star';
 import CloseIcon from '@mui/icons-material/Close';
 import DateFormatter from "./DateFormatter";
 
-function EditTask({editedTask, setEditedTask, setShowEditPane}) {
+function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTodo}) {
 
     const {text, category, description, dueDate, important, completed, entryDate} = editedTask;
+    console.log(editedTask);
 
     const completeIcon = completed ? <CheckCircleIcon className="icon"/> 
     : <CheckCircleOutlineOutlinedIcon className="icon"/> ;
@@ -22,7 +23,7 @@ function EditTask({editedTask, setEditedTask, setShowEditPane}) {
         setShowEditPane(false);
     };
 
-    function handleEditChange(event) {
+    function handleEditInputChange(event) {
         const {name, value} = event.target;
         setEditedTask((prev)=>(
             {
@@ -32,26 +33,30 @@ function EditTask({editedTask, setEditedTask, setShowEditPane}) {
         ));
     };
 
-    function handleEditClick(buttonName) {
-        setEditedTask((prev)=> (
+    function toggleIcon(buttonName) {
+        setEditedTask((prevEditedTask)=> (
             {
-                ...prev,
-                [buttonName] : buttonName==="completed" ? !completed : !important
+                ...prevEditedTask,
+                [buttonName] : buttonName==="completed" ? !editedTask.completed : !editedTask.important
             }
         ));
     };
 
-    return <Box className="editTask" sx={{backgroundColor:"#ffffff"}} mt="75px" p="15px" width="30vw" minHeight="80vh">
+    
+
+    return <Box className="editTask" sx={{backgroundColor:"#ffffff"}} mt="72px" p="15px" width="30vw" height="100%">
     <Box pb="10px" display="flex" alignItems="center" justifyContent="space-between">
     <Typography variant="h6" mb="10px" fontWeight="bold">Edit Task</Typography>
-    <Button className="add-button" color="inherit" variant="contained">Save Edit</Button>
+    <Button 
+    onClick={saveEditedTodo}
+    className="add-button" color="inherit" variant="contained">Save Edit</Button>
     </Box>
     <Divider/>
-    <Typography my="10px" fontWeight="bold">Added to  {category}</Typography> 
+    <Typography my="10px" fontWeight="bold">Added to :  {category}</Typography> 
     <Divider/>
     <Stack py="10px" direction="row" alignItems="center" justifyContent="space-between">
     <Tooltip title={completed ? "Mark as incomplete" : "Mark as complete"}>
-    <IconButton onClick={()=>handleEditClick("completed")}>
+    <IconButton onClick={()=>toggleIcon("completed")}>
     {completeIcon}
     </IconButton>
     </Tooltip>
@@ -59,12 +64,12 @@ function EditTask({editedTask, setEditedTask, setShowEditPane}) {
         id="standard-basic"  
         variant="standard"
         name="text" 
-        onChange={handleEditChange}
+        onChange={handleEditInputChange}
         placeholder="Enter task"
         autoFocus 
         value={text}/>
     <Tooltip title={important ? "Remove importance" : "Mark as important"}>
-    <IconButton onClick={()=>handleEditClick("important")}>
+    <IconButton onClick={()=>toggleIcon("important")}>
     {importanceIcon}
     </IconButton>
     </Tooltip>
@@ -74,7 +79,7 @@ function EditTask({editedTask, setEditedTask, setShowEditPane}) {
     <TextField
         id="standard-textarea"
         name="description"
-        onChange={handleEditChange}
+        onChange={handleEditInputChange}
         placeholder="Description"
         multiline
         variant="standard"
@@ -90,7 +95,7 @@ function EditTask({editedTask, setEditedTask, setShowEditPane}) {
     </Box>
     <Divider/>
     <Box py="10px" mb="10px">
-    <label className="bold-text">Edit due date<input onChange={handleEditChange} name="dueDate" className="date-input" type="date"/></label>
+    <label className="bold-text">Edit due date<input onChange={handleEditInputChange} name="dueDate" className="date-input" type="date"/></label>
     </Box>
     <Tooltip title="close">
     <IconButton onClick={handleCloseClick} size="small">
