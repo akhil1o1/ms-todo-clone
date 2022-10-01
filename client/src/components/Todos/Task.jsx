@@ -7,7 +7,7 @@ import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import DateFormatter from "./DateFormatter";
 
-function Task({text, id, category, description, dueDate, important, completed, entryDate, setShowEditPane, setEditedTask, editedTask, saveEditedTodo}) {
+function Task({text, id, category, description, dueDate, important, completed, entryDate, setShowEditPane, setEditedTask, editedTask, saveEditedTask}) {
 
     const [expand, setExpand] = useState(false);
 
@@ -19,21 +19,30 @@ function Task({text, id, category, description, dueDate, important, completed, e
         setShowEditPane(true);
         setEditedTask({text, id, category, description, dueDate, important, completed, entryDate});
     };
+    ////directly save the edit using api call
 
-    // function toggleIcon(buttonName) {
-    //     setEditedTask((prevEditedTask)=> (
-    //         {
-    //             ...prevEditedTask,
-    //             [buttonName] : buttonName==="completed" ? !editedTask.completed : !editedTask.important
-    //         }
-    //     ));
-    // };
+    function toggleIcon(buttonName) {
+        setEditedTask((prevEditedTask)=> (
+            {
+                ...prevEditedTask,
+                [buttonName] : buttonName==="completed" ? !editedTask.completed : !editedTask.important
+            }
+        ));
+    };
 
-    // function handleTaskIconClick(buttonName){
+    // const handleTaskIconClick = async (buttonName)=> {
     //     console.log(`buttonName : ${buttonName}`);
-    //     setEditedTask({text, id, category, description, dueDate, important, completed, entryDate});
+    //     await setEditedTask({text, id, category, description, dueDate, important, completed, entryDate})
     //     toggleIcon(buttonName);
+    //     saveEditedTask();
     // }
+
+    function handleTaskIconClick(buttonName){
+        console.log(`buttonName : ${buttonName}`);
+        setEditedTask({text, id, category, description, dueDate, important, completed, entryDate});
+        toggleIcon(buttonName);
+        saveEditedTask();
+    }
 
     return <Box className="task" mt="10px" py="7px" px="15px" >
     <Box display="flex" alignItems="center" justifyContent="space-between">

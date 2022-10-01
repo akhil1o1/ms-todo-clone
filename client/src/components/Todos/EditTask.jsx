@@ -5,11 +5,12 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DateFormatter from "./DateFormatter";
 
-function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTodo}) {
+function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTask, deleteTask}) {
 
-    const {text, category, description, dueDate, important, completed, entryDate} = editedTask;
+    const {text, id, category, description, dueDate, important, completed, entryDate} = editedTask;
     console.log(editedTask);
 
     const completeIcon = completed ? <CheckCircleIcon className="icon"/> 
@@ -41,14 +42,13 @@ function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTodo}) 
             }
         ));
     };
-
     
 
     return <Box className="editTask" sx={{backgroundColor:"#ffffff"}} mt="72px" p="15px" width="30vw" height="100%">
     <Box pb="10px" display="flex" alignItems="center" justifyContent="space-between">
     <Typography variant="h6" mb="10px" fontWeight="bold">Edit Task</Typography>
     <Button 
-    onClick={saveEditedTodo}
+    onClick={saveEditedTask}
     className="add-button" color="inherit" variant="contained">Save Edit</Button>
     </Box>
     <Divider/>
@@ -97,11 +97,18 @@ function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTodo}) 
     <Box py="10px" mb="10px">
     <label className="bold-text">Edit due date<input onChange={handleEditInputChange} name="dueDate" className="date-input" type="date"/></label>
     </Box>
+    <Box display="flex" alignItems="center" justifyContent="space-between">
     <Tooltip title="close">
     <IconButton onClick={handleCloseClick} size="small">
         <CloseIcon sx={{border:"1px solid", borderRadius:"100%"}}/>
     </IconButton>
     </Tooltip>
+    <Tooltip title="delete task">
+    <IconButton onClick={()=> deleteTask(id)} size="small">
+        <DeleteOutlineOutlinedIcon sx={{border:"1px solid", borderRadius:"100%"}}/>
+    </IconButton>
+    </Tooltip>
+    </Box>
     </Box>
 }
 

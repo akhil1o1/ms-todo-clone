@@ -59,7 +59,7 @@ function Todos({category}) {
     };
 
     
-    const saveEditedTodo = async () =>{
+    const saveEditedTask = async () =>{
         const response = await fetch(`${API_BASE}edit/${editedTask.id}`, {method: "PATCH",
         headers: {
         "Content-type": "application/json"
@@ -72,6 +72,17 @@ function Todos({category}) {
             const newTodos = prevTodos.filter((todo)=> todo._id!==response._id);
             return [...newTodos, response];
         });
+    };
+
+    const deleteTask = async (id) => {
+        const response = await fetch(`${API_BASE}delete/${id}`, {method : "DELETE"})
+        .then((res) => res.json())
+        .catch((err) => console.log(`Error : ${err}`));
+
+        setTodos((prevTodos)=> (
+            prevTodos.filter((todo)=> todo._id !== response._id)
+        ));
+        setShowEditPane(false);
     };
     
 
@@ -102,7 +113,7 @@ function Todos({category}) {
                 description={todo.description}
                 setShowEditPane={setShowEditPane}
                 setEditedTask={setEditedTask}
-                saveEditedTodo={saveEditedTodo}
+                saveEditedTask={saveEditedTask}
                 editedTask={editedTask}
             />
         ))}
@@ -112,7 +123,8 @@ function Todos({category}) {
         setShowEditPane={setShowEditPane} 
         editedTask={editedTask}
         setEditedTask={setEditedTask}
-        saveEditedTodo={saveEditedTodo}
+        saveEditedTask={saveEditedTask}
+        deleteTask={deleteTask}
         />
     }
     </Box>
