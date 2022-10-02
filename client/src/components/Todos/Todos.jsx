@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
 import { Box, Typography, Button, Stack } from "@mui/material";
 import SortIcon from '@mui/icons-material/Sort';
 import AddTask from "./AddTask";
-import Task from "./Task";
+import TaskList from "./TaskList";
 import DateFormatter from "./DateFormatter";
 import EditTask from "./EditTask";
 
@@ -56,15 +55,27 @@ function Todos({category}) {
         dueDate: "",
         description: ""
         });
-    };
+    }; 
 
-    
-    const saveEditedTask = async () =>{
-        const response = await fetch(`${API_BASE}edit/${editedTask.id}`, {method: "PATCH",
+   
+    const saveEditedTask = async (task, iconName) =>{
+        let saveTask= {};
+        const id = task && iconName ? task.id : editedTask.id;
+
+        if(task && iconName){
+            saveTask = {
+                ...task,
+                [iconName] : iconName==="completed" ? !task.completed : !task.important
+            };
+        }else{
+            saveTask = editedTask;
+        }
+
+        const response = await fetch(`${API_BASE}edit/${id}`, {method: "PATCH",
         headers: {
         "Content-type": "application/json"
         },
-        body: JSON.stringify(editedTask)})
+        body: JSON.stringify(saveTask)})
         .then(res => res.json())
         .catch(err => console.log(`Error : ${err}`));
 
@@ -100,23 +111,13 @@ function Todos({category}) {
         setNewTask={setNewTask}
         addNewTask={addNewTask}
         />
-        {todos?.map((todo)=> (
-            <Task
-                key={nanoid()}
-                id={todo._id}
-                text={todo.text}
-                category={todo.category}
-                entryDate={todo.entryDate}
-                dueDate={todo.dueDate}
-                completed={todo.completed}
-                important={todo.important}
-                description={todo.description}
-                setShowEditPane={setShowEditPane}
-                setEditedTask={setEditedTask}
-                saveEditedTask={saveEditedTask}
-                editedTask={editedTask}
-            />
-        ))}
+                
+        <TaskList 
+        todos={todos}
+        setShowEditPane={setShowEditPane}
+        setEditedTask={setEditedTask}
+        saveEditedTask={saveEditedTask}
+        />
     </Box>
     {
         showEditPane && <EditTask 
