@@ -18,13 +18,12 @@ function Navigation({category, setCategory}) {
         {name : "My day", icon : <WbSunnyOutlinedIcon/> },
         {name : "Important", icon : <StarBorderOutlinedIcon/> },
         {name : "Planned", icon : <CalendarMonthOutlinedIcon/>},
-        {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},
         {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>},
-        {name : "Tasks", icon : <AssignmentOutlinedIcon/> },
+        {name : "Tasks", icon : <AssignmentOutlinedIcon/>},
+        {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},
       ];  
 
     return <>
-        <div>
       <Toolbar />
       <Divider />
       <List>
@@ -40,7 +39,6 @@ function Navigation({category, setCategory}) {
         ))}
       </List>
       <Divider />
-    </div>
     </>
 }
 

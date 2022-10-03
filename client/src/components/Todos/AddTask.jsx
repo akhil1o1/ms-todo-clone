@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Box, TextField, Button, Divider, Tooltip, IconButton} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 
-function AddTask({newTask, setNewTask, addNewTask}) {
+function AddTask({newTask, setNewTask, addNewTask , category}) {
 
     const [addDescription, setAddDescription] = useState(false);
 
@@ -21,6 +21,10 @@ function AddTask({newTask, setNewTask, addNewTask}) {
 
     function handleAddDescriptionClick() {
         setAddDescription((prev)=> !prev);
+    }
+
+    if(category==="Tasks" || category==="Completed"){
+        return;
     }
 
 

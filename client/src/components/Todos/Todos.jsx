@@ -5,11 +5,13 @@ import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 import DateFormatter from "./DateFormatter";
 import EditTask from "./EditTask";
+import ErrorAlert from "./ErrorAlert";
 
 function Todos({category}) {
     console.log(`category: ${category}`);
 
-    const [todos, setTodos] = useState([]);
+    const [allTodos, setAllTodos] = useState([]);
+    const [filteredTodos, setFilteredTodos] = useState([]);
     const [showEditPane, setShowEditPane] = useState(false);
     const [newTask, setNewTask] = useState({
         text: "",
@@ -18,8 +20,22 @@ function Todos({category}) {
         description: ""
     });
     const [editedTask, setEditedTask] = useState({});
+    const [showAlert, setShowAlert] = useState(false);
 
-    console.log(editedTask); 
+    useEffect(()=>{
+        const filterTodos = () => {
+            if(category==="My day" || category==="Planned" || category==="Assigned to me"){
+                setFilteredTodos(allTodos.filter(todo => todo.category===category));
+            }else if(category==="Important"){
+                setFilteredTodos(allTodos.filter(todo => todo.important===true));
+            }else if(category==="Tasks"){
+                setFilteredTodos(allTodos)
+            }else if(category==="Completed"){
+                setFilteredTodos(allTodos.filter(todo => todo.completed===true));
+            }
+        }
+        filterTodos();
+    },[category, allTodos]);
 
     const API_BASE = "http://localhost:5000/todos/";
 
@@ -27,17 +43,25 @@ function Todos({category}) {
         const fetchTodos = async ()=> {
             const response = await fetch(API_BASE);
             const data = await response.json();
-            setTodos(data);
+            setAllTodos(data);
             console.log("use effect ran");
         };
         fetchTodos();
-    },[]);
+    },[category]);
 
 
     const addNewTask = async ()=> {
+
+        if(newTask.text.trim().length===0){
+            setShowAlert(true);
+            return;
+        }
+
         const task ={
             ...newTask,
-            category: category};
+            category: category,
+            important: category==="Important" ? true : false
+        };
 
         const response = await fetch(API_BASE, {method: "POST", headers: {
             "Content-type": "application/json"
@@ -46,15 +70,10 @@ function Todos({category}) {
         .then(res => res.json())
         .catch(err => console.log(`Error : ${err}`));
 
-        setTodos((prevTodos)=> (
+        setAllTodos((prevTodos)=> (
             [...prevTodos, response]
         ));
-        setNewTask({
-        text: "",
-        category: "",
-        dueDate: "",
-        description: ""
-        });
+        setNewTask({text: "", category: "", dueDate: "", description: ""});
     }; 
 
    
@@ -71,6 +90,11 @@ function Todos({category}) {
             saveTask = editedTask;
         }
 
+        if(saveTask?.text.trim().length===0){
+            setShowAlert(true);
+            return;
+        }
+
         const response = await fetch(`${API_BASE}edit/${id}`, {method: "PATCH",
         headers: {
         "Content-type": "application/json"
@@ -79,7 +103,7 @@ function Todos({category}) {
         .then(res => res.json())
         .catch(err => console.log(`Error : ${err}`));
 
-        setTodos((prevTodos)=> {
+        setAllTodos((prevTodos)=> {
             const newTodos = prevTodos.filter((todo)=> todo._id!==response._id);
             return [...newTodos, response];
         });
@@ -90,7 +114,7 @@ function Todos({category}) {
         .then((res) => res.json())
         .catch((err) => console.log(`Error : ${err}`));
 
-        setTodos((prevTodos)=> (
+        setAllTodos((prevTodos)=> (
             prevTodos.filter((todo)=> todo._id !== response._id)
         ));
         setShowEditPane(false);
@@ -106,14 +130,20 @@ function Todos({category}) {
         </Stack>
             <Button variant="text" startIcon={<SortIcon/>}>Sort</Button>
         </Box>
+
         <AddTask 
         newTask={newTask} 
         setNewTask={setNewTask}
         addNewTask={addNewTask}
-        />
+        category={category}
+        /> 
+        
+        <ErrorAlert 
+        showAlert={showAlert} 
+        setShowAlert={setShowAlert}/>
                 
         <TaskList 
-        todos={todos}
+        todos={filteredTodos}
         setShowEditPane={setShowEditPane}
         setEditedTask={setEditedTask}
         saveEditedTask={saveEditedTask}
