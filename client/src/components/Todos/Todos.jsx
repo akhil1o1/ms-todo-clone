@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button, Stack, TextField} from "@mui/material";
 import SortIcon from '@mui/icons-material/Sort';
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
@@ -21,9 +21,11 @@ function Todos({category}) {
     });
     const [editedTask, setEditedTask] = useState({});
     const [showAlert, setShowAlert] = useState(false);
+    const [searchTask, setSearchTask] = useState("");
 
+    console.log(searchTask);
+ 
     useEffect(()=>{
-        const filterTodos = () => {
             if(category==="My day" || category==="Planned" || category==="Assigned to me"){
                 setFilteredTodos(allTodos.filter(todo => todo.category===category));
             }else if(category==="Important"){
@@ -33,9 +35,21 @@ function Todos({category}) {
             }else if(category==="Completed"){
                 setFilteredTodos(allTodos.filter(todo => todo.completed===true));
             }
-        }
-        filterTodos();
+            setShowEditPane(false);
     },[category, allTodos]);
+
+
+    useEffect(()=> {
+        setFilteredTodos((prev)=> (
+            prev.filter((todo)=> todo.text.toLowerCase().includes(searchTask.toLowerCase()))
+        ))
+    },[searchTask]);
+
+    function handleSearchInputChange(event) {
+        const { value } = event.target;
+        value.trim();
+        setSearchTask(value);
+    }
 
     const API_BASE = "http://localhost:5000/todos/";
 
@@ -107,6 +121,7 @@ function Todos({category}) {
             const newTodos = prevTodos.filter((todo)=> todo._id!==response._id);
             return [...newTodos, response];
         });
+        setShowEditPane(false);
     };
 
     const deleteTask = async (id) => {
@@ -128,6 +143,12 @@ function Todos({category}) {
         <Typography variant="h6" fontWeight="bold">{category}</Typography>
         <DateFormatter label={"Today"}/>
         </Stack>
+        <TextField sx={{width:"50%"}} 
+        onChange={handleSearchInputChange}
+        value={searchTask}
+        size="small" 
+        label="Search Tasks" 
+        variant="filled" />
             <Button variant="text" startIcon={<SortIcon/>}>Sort</Button>
         </Box>
 
