@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Stack, TextField} from "@mui/material";
-import SortIcon from '@mui/icons-material/Sort';
+import { Box } from "@mui/material";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
-import DateFormatter from "./DateFormatter";
 import EditTask from "./EditTask";
 import ErrorAlert from "./ErrorAlert";
+import Header from "./Header";
 
 function Todos({category}) {
     console.log(`category: ${category}`);
@@ -22,10 +21,11 @@ function Todos({category}) {
     const [editedTask, setEditedTask] = useState({});
     const [showAlert, setShowAlert] = useState(false);
     const [searchTask, setSearchTask] = useState("");
+    const [tasksFound, setTasksFound] = useState([]);
 
     console.log(searchTask);
  
-    useEffect(()=>{
+    useEffect(()=>{ // to filter todos based on category
             if(category==="My day" || category==="Planned" || category==="Assigned to me"){
                 setFilteredTodos(allTodos.filter(todo => todo.category===category));
             }else if(category==="Important"){
@@ -36,24 +36,17 @@ function Todos({category}) {
                 setFilteredTodos(allTodos.filter(todo => todo.completed===true));
             }
             setShowEditPane(false);
-    },[category, allTodos]);
+    },[category, allTodos]); 
 
+    useEffect(()=> { // to search tasks
+        const searchedTasks = filteredTodos.filter((todo)=> todo.text.toLowerCase().includes(searchTask.toLowerCase()));
+        setTasksFound(searchedTasks);
+    },[searchTask, filteredTodos]);
 
-    useEffect(()=> {
-        setFilteredTodos((prev)=> (
-            prev.filter((todo)=> todo.text.toLowerCase().includes(searchTask.toLowerCase()))
-        ))
-    },[searchTask]);
-
-    function handleSearchInputChange(event) {
-        const { value } = event.target;
-        value.trim();
-        setSearchTask(value);
-    }
-
+    
     const API_BASE = "http://localhost:5000/todos/";
 
-    useEffect(()=>{
+    useEffect(()=>{ // to fetch all todos on start
         const fetchTodos = async ()=> {
             const response = await fetch(API_BASE);
             const data = await response.json();
@@ -70,7 +63,6 @@ function Todos({category}) {
             setShowAlert(true);
             return;
         }
-
         const task ={
             ...newTask,
             category: category,
@@ -138,20 +130,11 @@ function Todos({category}) {
 
     return<Box sx={{display: showEditPane ? "flex" : "block", gap: showEditPane ? "20px" : "none"}}> 
         <Box width="95%">
-        <Box mb="20px" display="flex" justifyContent="space-between">
-        <Stack>
-        <Typography variant="h6" fontWeight="bold">{category}</Typography>
-        <DateFormatter label={"Today"}/>
-        </Stack>
-        <TextField sx={{width:"50%"}} 
-        onChange={handleSearchInputChange}
-        value={searchTask}
-        size="small" 
-        label="Search Tasks" 
-        variant="filled" />
-            <Button variant="text" startIcon={<SortIcon/>}>Sort</Button>
-        </Box>
-
+        <Header 
+           category={category}
+           searchTask={searchTask}
+           setSearchTask={setSearchTask}
+        />
         <AddTask 
         newTask={newTask} 
         setNewTask={setNewTask}
@@ -164,7 +147,7 @@ function Todos({category}) {
         setShowAlert={setShowAlert}/>
                 
         <TaskList 
-        todos={filteredTodos}
+        todos={searchTask ? tasksFound : filteredTodos}
         setShowEditPane={setShowEditPane}
         setEditedTask={setEditedTask}
         saveEditedTask={saveEditedTask}
