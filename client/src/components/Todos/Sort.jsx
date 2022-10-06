@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Menu, MenuItem, Divider, ListItemText, ListItemIcon} from "@mui/material";
 import SortIcon from '@mui/icons-material/Sort';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
@@ -6,17 +6,29 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 
+const sortItems = [
+  {icon : <StarBorderOutlinedIcon fontSize='small'/> , text : "Importance" },
+  {icon : <CalendarMonthOutlinedIcon fontSize='small'/> , text : "Due date" },
+  {icon : <SortByAlphaOutlinedIcon fontSize='small'/> , text : "Alphabetically" },
+  {icon : <AddBoxOutlinedIcon fontSize='small'/> , text : "Creation date" },
+];
 
-function Sort() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+
+function Sort({filteredTodos, setFilteredTodos}) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [sortBy, setSortBy] = useState("Creation Date");
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
+
+  function handleSort(name) {
+    setSortBy(name);
+    setAnchorEl(null);
+  }
+  
   return (
     <>
       <Button
@@ -33,38 +45,23 @@ function Sort() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleSort}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
         <MenuItem >Sort by</MenuItem>
         <Divider/>
-        
-        <MenuItem onClick={handleClose}>
+        {
+          sortItems.map((item)=> (
+            <MenuItem onClick={()=> handleSort(item.text)}>
         <ListItemIcon>
-            <StarBorderOutlinedIcon fontSize="small" />
+            {item.icon}
           </ListItemIcon>
-          <ListItemText>Importance</ListItemText>
+          <ListItemText>{item.text}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-            <CalendarMonthOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Due Date</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-            <SortByAlphaOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Alphabetically</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-            <AddBoxOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Creation Date</ListItemText>
-        </MenuItem>
+          ))
+        }
       </Menu>
     </>
   );

@@ -134,6 +134,8 @@ function Todos({category}) {
            category={category}
            searchTask={searchTask}
            setSearchTask={setSearchTask}
+           filteredTodos={filteredTodos}
+           setFilteredTodos={setFilteredTodos}
         />
         <AddTask 
         newTask={newTask} 
