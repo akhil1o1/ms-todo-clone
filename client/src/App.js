@@ -4,6 +4,7 @@ import Todos from './components/Todos/Todos';
 import TopBar from './components/Drawer/TopBar';
 import MobileScreenDrawer from './components/Drawer/MobileScreenDrawer';
 import SmallScreenDrawer from './components/Drawer/SmallScreenDrawer';
+import ThemeContext from './Context/themeContext';
 import "./App.css";
 
 const drawerWidth = 240;
@@ -12,6 +13,7 @@ function App(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [category, setCategory] = useState("My day"); 
+  const [theme , setTheme] = useState("light");
 
   
   const handleDrawerToggle = () => {
@@ -20,10 +22,11 @@ function App(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  return (
+  return (<ThemeContext.Provider value={{theme, setTheme}}>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <TopBar drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}/>
+      <TopBar drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}
+      />
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -51,6 +54,7 @@ function App(props) {
         <Todos category={category}/>
       </Box>
     </Box>
+    </ThemeContext.Provider>
   );
 }
 

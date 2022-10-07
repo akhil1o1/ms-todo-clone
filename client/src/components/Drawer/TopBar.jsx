@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Box, AppBar, Toolbar, IconButton, Typography} from "@mui/material";
+import ThemeContext from "../../Context/themeContext";
 import MenuIcon from '@mui/icons-material/Menu';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
 function TopBar({drawerWidth, handleDrawerToggle}) {
+
+  const ctx = useContext(ThemeContext);
+  console.log(ctx);
+
     return <AppBar
     position="fixed"
     sx={{

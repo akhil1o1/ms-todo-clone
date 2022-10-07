@@ -6,6 +6,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 
+
 const sortItems = [
   {icon : <StarBorderOutlinedIcon fontSize='small'/> , text : "Importance" },
   {icon : <CalendarMonthOutlinedIcon fontSize='small'/> , text : "Due date" },
@@ -16,7 +17,12 @@ const sortItems = [
 
 function Sort({filteredTodos, setFilteredTodos}) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [sortBy, setSortBy] = useState("Creation Date");
+  const [sortBy, setSortBy] = useState("");
+  console.log(filteredTodos);
+
+  useEffect(()=> {
+    
+  }, [sortBy, filteredTodos, setFilteredTodos]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -54,7 +60,7 @@ function Sort({filteredTodos, setFilteredTodos}) {
         <Divider/>
         {
           sortItems.map((item)=> (
-            <MenuItem onClick={()=> handleSort(item.text)}>
+            <MenuItem key={item.text} onClick={()=> handleSort(item.text)}>
         <ListItemIcon>
             {item.icon}
           </ListItemIcon>
