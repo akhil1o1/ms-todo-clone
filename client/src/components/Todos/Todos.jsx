@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box } from "@mui/material";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 import EditTask from "./EditTask";
 import ErrorAlert from "./ErrorAlert";
 import Header from "./Header";
+import ThemeContext from "../../Context/themeContext";
 
 function Todos({category}) {
     console.log(`category: ${category}`);
@@ -24,7 +25,7 @@ function Todos({category}) {
     const [tasksFound, setTasksFound] = useState([]);
 
     console.log(searchTask);
- 
+  
     useEffect(()=>{ // to filter todos based on category
             if(category==="My day" || category==="Planned" || category==="Assigned to me"){
                 setFilteredTodos(allTodos.filter(todo => todo.category===category));
@@ -128,7 +129,11 @@ function Todos({category}) {
     };
     
 
-    return<Box sx={{display: showEditPane ? "flex" : "block", gap: showEditPane ? "20px" : "none"}}> 
+    return<Box 
+        sx={{
+        display: showEditPane ? "flex" : "block", 
+        gap: showEditPane ? "20px" : "none",
+        }}> 
         <Box width="95%">
         <Header 
            category={category}

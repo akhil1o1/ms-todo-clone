@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {Box, CssBaseline, Toolbar} from "@mui/material";
+import {Box, CssBaseline, Toolbar, createTheme, ThemeProvider} from "@mui/material";
 import Todos from './components/Todos/Todos';
 import TopBar from './components/Drawer/TopBar';
 import MobileScreenDrawer from './components/Drawer/MobileScreenDrawer';
 import SmallScreenDrawer from './components/Drawer/SmallScreenDrawer';
 import ThemeContext from './Context/themeContext';
 import "./App.css";
+
+
 
 const drawerWidth = 240;
 
@@ -15,6 +17,12 @@ function App(props) {
   const [category, setCategory] = useState("My day"); 
   const [theme , setTheme] = useState("light");
 
+  const appTheme = createTheme({
+    palette: {
+      mode: theme,
+    },
+  });
+
   
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -22,8 +30,9 @@ function App(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  return (<ThemeContext.Provider value={{theme, setTheme}}>
-    <Box sx={{ display: 'flex' }}>
+  return (<ThemeProvider theme={appTheme}>
+  <ThemeContext.Provider value={{theme, setTheme}}>
+    <Box sx={{ display: 'flex', backgroundColor : theme==="light" ? "#f3f2f1" : "#000000c4" }}>
       <CssBaseline />
       <TopBar drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}
       />
@@ -55,6 +64,7 @@ function App(props) {
       </Box>
     </Box>
     </ThemeContext.Provider>
+    </ThemeProvider>
   );
 }
 

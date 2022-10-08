@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {Box, TextField, Button, Divider, Tooltip, IconButton} from "@mui/material";
-import DescriptionIcon from '@mui/icons-material/Description';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import ThemeContext from "../../Context/themeContext";
 
 function AddTask({newTask, setNewTask, addNewTask , category}) {
 
     const [addDescription, setAddDescription] = useState(false);
 
     const {text,  description,  dueDate} = newTask;
-    console.table(text, description, dueDate);
+
+    const ctx = useContext(ThemeContext);
+    const {theme} = ctx;
+
+
 
     function handleInputChange(event) {
         const {name, value} = event.target;
@@ -29,7 +34,7 @@ function AddTask({newTask, setNewTask, addNewTask , category}) {
 
 
     return <Box className="add-task"
-    sx={{backgroundColor:"#ffffff", 
+    sx={{backgroundColor:theme==="light" ? "#ffffff" : "#1b1b1b", 
     paddingBlock:"5px",
     borderRadius:"5px"
     }}>
@@ -44,7 +49,7 @@ function AddTask({newTask, setNewTask, addNewTask , category}) {
     variant="standard"/>
     <Tooltip title="Add description">
         <IconButton onClick={handleAddDescriptionClick}>
-            <DescriptionIcon/>
+            <DescriptionOutlinedIcon/>
         </IconButton>
     </Tooltip>
     </Box>
@@ -56,10 +61,10 @@ function AddTask({newTask, setNewTask, addNewTask , category}) {
     value={dueDate}
     onChange={handleInputChange} 
     name="dueDate" 
-    className="date-input" 
+    className={theme==="light" ? "date-input-light" : "date-input-dark"}
     type="date"/>
     </label>
-    <Button onClick={addNewTask} className="add-button" color="inherit" variant="contained">Add</Button>
+    <Button onClick={addNewTask} className={theme==="light" ? "add-button" : null} variant="contained">Add</Button>
     </Box>
     {
         addDescription && <Box px="20px" mb="5px">

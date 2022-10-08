@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Box, Typography, TextField, Stack, Tooltip, Divider, Button, IconButton} from "@mui/material";
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
@@ -7,17 +7,21 @@ import StarIcon from '@mui/icons-material/Star';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DateFormatter from "./DateFormatter";
+import ThemeContext from "../../Context/themeContext";
 
 function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTask, deleteTask}) {
 
     const {text, id, category, description, dueDate, important, completed, entryDate} = editedTask;
     console.log(editedTask);
 
-    const completeIcon = completed ? <CheckCircleIcon className="icon"/> 
-    : <CheckCircleOutlineOutlinedIcon className="icon"/> ;
+    const ctx = useContext(ThemeContext);
+    const { theme } = ctx;
 
-    const importanceIcon = important ? <StarIcon className="icon"/> 
-    : <StarBorderOutlinedIcon className="icon"/> ;
+    const completeIcon = completed ? <CheckCircleIcon sx={{color : theme==="light" ? "#757575" : "#fff" }}/> 
+    : <CheckCircleOutlineOutlinedIcon sx={{color : theme==="light" ? "#757575" : "#fff" }}/> ;
+
+    const importanceIcon = important ? <StarIcon sx={{color : theme==="light" ? "#757575" : "#fff" }}/> 
+    : <StarBorderOutlinedIcon sx={{color : theme==="light" ? "#757575" : "#fff" }}/> ;
 
 
     function handleCloseClick() {
@@ -44,12 +48,12 @@ function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTask, d
     };
     
 
-    return <Box className="editTask" sx={{backgroundColor:"#ffffff"}} mt="72px" p="15px" width="30vw" height="100%">
+    return <Box className="editTask" sx={{backgroundColor:theme==="light" ?"#ffffff" : "#1b1b1b"}} mt="72px" p="15px" width="30vw" height="100%">
     <Box pb="10px" display="flex" alignItems="center" justifyContent="space-between">
     <Typography variant="h6" mb="10px" fontWeight="bold">Edit Task</Typography>
     <Button 
     onClick={saveEditedTask}
-    className="add-button" color="inherit" variant="contained">Save Edit</Button>
+    className={theme==="light" ? "add-button" : null} variant="contained">Save Edit</Button>
     </Box>
     <Divider/>
     <Typography my="10px" fontWeight="bold">Added to :  {category}</Typography> 
@@ -95,17 +99,30 @@ function EditTask({editedTask, setEditedTask, setShowEditPane, saveEditedTask, d
     </Box>
     <Divider/>
     <Box py="10px" mb="10px">
-    <label className="bold-text">Edit due date<input onChange={handleEditInputChange} name="dueDate" className="date-input" type="date"/></label>
+    <label className="bold-text">Edit due date
+    <input 
+    onChange={handleEditInputChange} 
+    name="dueDate" 
+    className={theme==="light" ? "date-input-light" : "date-input-dark"}
+    type="date"/></label>
     </Box>
     <Box display="flex" alignItems="center" justifyContent="space-between">
     <Tooltip title="close">
     <IconButton onClick={handleCloseClick} size="small">
-        <CloseIcon sx={{border:"1px solid", borderRadius:"100%"}}/>
+        <CloseIcon
+         sx={{border:"1px solid", 
+         borderRadius:"100%",
+         color : theme==="light" ? "#757575" : "#fff"
+         }}/>
     </IconButton>
     </Tooltip>
     <Tooltip title="delete task">
     <IconButton onClick={()=> deleteTask(id)} size="small">
-        <DeleteOutlineOutlinedIcon sx={{border:"1px solid", borderRadius:"100%"}}/>
+        <DeleteOutlineOutlinedIcon 
+        sx={{border:"1px solid", 
+        borderRadius:"100%",
+        color : theme==="light" ? "#757575" : "#fff"
+        }}/>
     </IconButton>
     </Tooltip>
     </Box>

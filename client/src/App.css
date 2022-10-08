@@ -2,7 +2,6 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f3f2f1 !important;
 }
 
 ::-webkit-scrollbar {
@@ -24,9 +23,10 @@ body{
 }
 .add-button{
     background-color: #ffffff !important;
+    color: #000000 !important;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px !important;
 }
-.date-input{
+.date-input-light{
     height: 30px;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
@@ -34,16 +34,32 @@ body{
     padding: 3px 5px;
     width: 190px;
 }
-.task{
+
+.date-input-dark{
+    height: 30px;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: #272727;
+    color: white;
+    padding: 3px 5px;
+    width: 190px;
+}
+.task-light{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
-    background-color: #ffffff;
+}
+.task-light:hover{
+    background-color: #f3f2f1;
+}
+.task-dark{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 5px;
+}
+.task-dark:hover{
+    background-color: #543e3e;
 }
 .icon{
     color: #757575;
-}
-.task:hover{
-    background-color: #f3f2f1;
 }
 .editTask{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

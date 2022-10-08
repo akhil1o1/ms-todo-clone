@@ -1,14 +1,24 @@
 import React, {useContext} from "react";
-import {Box, AppBar, Toolbar, IconButton, Typography} from "@mui/material";
+import {Box, AppBar, Toolbar, IconButton, Typography, Tooltip} from "@mui/material";
 import ThemeContext from "../../Context/themeContext";
 import MenuIcon from '@mui/icons-material/Menu';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import NightlightOutlinedIcon from '@mui/icons-material/NightlightOutlined';
+
 
 
 function TopBar({drawerWidth, handleDrawerToggle}) {
 
   const ctx = useContext(ThemeContext);
+  const { theme, setTheme } = ctx;
   console.log(ctx);
+  console.log(`theme - ${theme}`);
+
+  function handleClick() {
+    const switchThemeTo = theme==="light" ? "dark" : "light";
+    setTheme(switchThemeTo);
+  }
 
     return <AppBar
     position="fixed"
@@ -18,7 +28,7 @@ function TopBar({drawerWidth, handleDrawerToggle}) {
       boxShadow:'none'
     }}
   >
-    <Toolbar>
+    <Toolbar sx={{display:"flex", justifyContent:"space-between"}}>
       <IconButton
         color="inherit"
         aria-label="open drawer"
@@ -28,12 +38,24 @@ function TopBar({drawerWidth, handleDrawerToggle}) {
       >
         <MenuIcon />
       </IconButton>
+      <Box display="flex">
       <Typography variant="h6" mr="10px" fontWeight="600" noWrap component="div">
         To Do 
       </Typography>
       <DoneAllIcon fontSize="large" />
+      </Box>
       <Box pl="50px">
       </Box>
+      <Tooltip title={ theme==="light" ? "Turn off the light" : "Turn on the light"}>
+        <IconButton
+        onClick={handleClick} 
+        color="success" 
+        sx={{borderRadius: "100%" , border: "1px solid white"}}>
+          {
+            theme==="light" ? <NightlightOutlinedIcon sx={{color: "#fff"}}/> : <LightModeOutlinedIcon sx={{color: "#fff"}}/> 
+          }
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   </AppBar>
 }
