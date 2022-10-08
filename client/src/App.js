@@ -32,7 +32,7 @@ function App(props) {
 
   return (<ThemeProvider theme={appTheme}>
   <ThemeContext.Provider value={{theme, setTheme}}>
-    <Box sx={{ display: 'flex', backgroundColor : theme==="light" ? "#f3f2f1" : "#000000c4" }}>
+    <Box sx={{ display: 'flex', backgroundColor : theme==="light" ? "#f3f2f1" : "#000000c4"  }}>
       <CssBaseline />
       <TopBar drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}
       />

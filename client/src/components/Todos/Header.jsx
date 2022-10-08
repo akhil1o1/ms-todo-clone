@@ -11,7 +11,7 @@ function Header({searchTask, category, setSearchTask, filteredTodos, setFiltered
         setSearchTask(value);
     }
 
-    return <Box mb="20px" display="flex" justifyContent="space-between">
+    return <Box mb="20px" display="flex" alignItems="center" justifyContent="space-between">
     <Stack>
     <Typography variant="h6" fontWeight="bold">{category}</Typography>
     <DateFormatter label={"Today"}/>
@@ -21,7 +21,7 @@ function Header({searchTask, category, setSearchTask, filteredTodos, setFiltered
     value={searchTask}
     size="small" 
     label="Search Tasks" 
-    variant="filled" />
+    variant="outlined" />
        <Sort 
         filteredTodos={filteredTodos}
         setFilteredTodos={setFilteredTodos}

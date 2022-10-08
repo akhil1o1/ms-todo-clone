@@ -1,4 +1,5 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
+import { nanoid } from "nanoid";
 import {Toolbar, Divider, List, ListItem, ListItemText, ListItemButton, ListItemIcon} from "@mui/material";
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
@@ -7,9 +8,23 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
+import CreateList from "./CreateList";
 import ThemeContext from "../../Context/themeContext";
 
+const listNames = [
+  {name : "My day", icon : <WbSunnyOutlinedIcon/>, createdList: false },
+  {name : "Important", icon : <StarBorderOutlinedIcon/>, createdList: false },
+  {name : "Planned", icon : <CalendarMonthOutlinedIcon/>, createdList: false},
+  {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>, createdList: false},
+  {name : "Tasks", icon : <AssignmentOutlinedIcon/>},
+  {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>, createdList: false},
+];  
+
+
+
 function Navigation({category, setCategory}) {
+
+  const [list, setList] = useState(listNames);
 
   const ctx = useContext(ThemeContext);
   const {theme} = ctx;
@@ -19,23 +34,12 @@ function Navigation({category, setCategory}) {
   };
 
 
-    const listNames = [
-        {name : "My day", icon : <WbSunnyOutlinedIcon/> },
-        {name : "Important", icon : <StarBorderOutlinedIcon/> },
-        {name : "Planned", icon : <CalendarMonthOutlinedIcon/>},
-        {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>},
-        {name : "Tasks", icon : <AssignmentOutlinedIcon/>},
-        {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>},
-      ];  
-
-      
-
     return <>
       <Toolbar />
       <Divider />
       <List>
-        {listNames.map((list, index) => (
-          <ListItem key={list.name} disablePadding>
+        {list.map((list, index) => (
+          <ListItem key={nanoid()} disablePadding>
             <ListItemButton className={category===list.name && theme==="light" ? "slected-category" : " "} onClick={()=> handleClick(list.name)}>
               <ListItemIcon className={category===list.name && theme==="light" ? "slected-category-icon" : " "}>
                 {list.icon}
@@ -46,6 +50,7 @@ function Navigation({category, setCategory}) {
         ))}
       </List>
       <Divider />
+      <CreateList setList={setList}/>
     </>
 }
 

@@ -56,9 +56,7 @@ function AddTask({newTask, setNewTask, addNewTask , category}) {
     <Divider orientation="horizontal"/>
     <Box py="4px" px="20px"
     sx={{display:"flex", justifyContent:"space-between"}}>
-    <label>Add a due date 
-    <input 
-    value={dueDate}
+    <label>Add a due date  <input value={dueDate}
     onChange={handleInputChange} 
     name="dueDate" 
     className={theme==="light" ? "date-input-light" : "date-input-dark"}

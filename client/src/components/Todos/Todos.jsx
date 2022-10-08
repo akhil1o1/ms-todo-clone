@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 import EditTask from "./EditTask";
 import ErrorAlert from "./ErrorAlert";
 import Header from "./Header";
-import ThemeContext from "../../Context/themeContext";
+
 
 function Todos({category}) {
     console.log(`category: ${category}`);
