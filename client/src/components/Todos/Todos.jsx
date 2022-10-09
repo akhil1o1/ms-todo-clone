@@ -7,10 +7,9 @@ import ErrorAlert from "./ErrorAlert";
 import Header from "./Header";
 
 
-function Todos({category}) {
+function Todos({category, allTodos, setAllTodos}) {
     console.log(`category: ${category}`);
 
-    const [allTodos, setAllTodos] = useState([]);
     const [filteredTodos, setFilteredTodos] = useState([]);
     const [showEditPane, setShowEditPane] = useState(false);
     const [newTask, setNewTask] = useState({
@@ -26,15 +25,15 @@ function Todos({category}) {
 
     console.log(searchTask);
   
-    useEffect(()=>{ // to filter todos based on category
-            if(category==="My day" || category==="Planned" || category==="Assigned to me"){
-                setFilteredTodos(allTodos.filter(todo => todo.category===category));
+    useEffect(()=>{
+            if(category==="Tasks"){
+                setFilteredTodos(allTodos)
             }else if(category==="Important"){
                 setFilteredTodos(allTodos.filter(todo => todo.important===true));
-            }else if(category==="Tasks"){
-                setFilteredTodos(allTodos)
             }else if(category==="Completed"){
                 setFilteredTodos(allTodos.filter(todo => todo.completed===true));
+            }else{
+                setFilteredTodos(allTodos.filter(todo =>todo.category===category));
             }
             setShowEditPane(false);
     },[category, allTodos]); 
@@ -46,17 +45,6 @@ function Todos({category}) {
 
     
     const API_BASE = "http://localhost:5000/todos/";
-
-    useEffect(()=>{ // to fetch all todos on start
-        const fetchTodos = async ()=> {
-            const response = await fetch(API_BASE);
-            const data = await response.json();
-            setAllTodos(data);
-            console.log("use effect ran");
-        };
-        fetchTodos();
-    },[category]);
-
 
     const addNewTask = async ()=> {
 

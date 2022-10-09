@@ -8,16 +8,17 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
+
 import CreateList from "./CreateList";
 import ThemeContext from "../../Context/themeContext";
 
 const listNames = [
-  {name : "My day", icon : <WbSunnyOutlinedIcon/>, createdList: false },
-  {name : "Important", icon : <StarBorderOutlinedIcon/>, createdList: false },
-  {name : "Planned", icon : <CalendarMonthOutlinedIcon/>, createdList: false},
-  {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>, createdList: false},
+  {name : "My day", icon : <WbSunnyOutlinedIcon/>, customList: false },
+  {name : "Important", icon : <StarBorderOutlinedIcon/>, customList: false },
+  {name : "Planned", icon : <CalendarMonthOutlinedIcon/>, customList: false},
+  {name : "Assigned to me", icon : <PersonOutlineOutlinedIcon/>, customList: false},
   {name : "Tasks", icon : <AssignmentOutlinedIcon/>},
-  {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>, createdList: false},
+  {name : "Completed", icon : <CheckCircleOutlineOutlinedIcon/>, customList: false},
 ];  
 
 
@@ -27,8 +28,10 @@ function Navigation({category, setCategory}) {
   const [list, setList] = useState(listNames);
 
   const ctx = useContext(ThemeContext);
-  const {theme} = ctx;
+  const {theme, allTodos} = ctx;
+  console.log("alltodos", allTodos);
 
+ 
   function handleClick(listname) {
     setCategory(listname);
   };

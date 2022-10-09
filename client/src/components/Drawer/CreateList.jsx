@@ -1,11 +1,13 @@
 import React, {useState} from "react";
-import {Box, TextField, Typography, IconButton, Tooltip} from '@mui/material';
+import { nanoid } from "nanoid";
+import {Box, TextField, Typography, IconButton, Tooltip, List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 
 
 function CreateList({ setList }) {
 
+    const [customLists, setCustomLists] = useState([]);
     const [listName, setListName] = useState("");
     console.log("listname", listName);
 
@@ -16,7 +18,7 @@ function CreateList({ setList }) {
 
     function handleClick() {
          setList((prev)=> (
-            [ ...prev, {name: listName.trim(), icon: <ListAltOutlinedIcon/>, createdList: true }]
+            [ ...prev, {name: listName.trim(), icon: <ListAltOutlinedIcon/>, customList: true }]
          ));
          setListName("");
     };
@@ -35,6 +37,18 @@ function CreateList({ setList }) {
                 </IconButton>
             </Tooltip>
             </Box>
+            <List>
+        {customLists.map((list) => (
+          <ListItem key={nanoid()} disablePadding>
+            <ListItemButton className={category===list.name && theme==="light" ? "slected-category" : " "} onClick={()=> handleClick(list.name)}>
+              <ListItemIcon className={category===list.name && theme==="light" ? "slected-category-icon" : " "}>
+                <ListAltOutlinedIcon/>
+              </ListItemIcon>
+              <ListItemText primary={list.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
         </Box>
 }
 
