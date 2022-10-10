@@ -1,11 +1,10 @@
 import { createContext } from "react";
 
-const ThemeContext = createContext(
+const Appcontext = createContext(
     {
         theme : "light",
         setTheme : () => {},
-        allTodos : []
     }
 );
 
-export default ThemeContext;
+export default Appcontext;

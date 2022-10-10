@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import React, { useEffect, useState} from "react";
+import { Box, CircularProgress } from "@mui/material";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 import EditTask from "./EditTask";
@@ -8,7 +8,6 @@ import Header from "./Header";
 
 
 function Todos({category, allTodos, setAllTodos}) {
-    console.log(`category: ${category}`);
 
     const [filteredTodos, setFilteredTodos] = useState([]);
     const [showEditPane, setShowEditPane] = useState(false);
@@ -23,7 +22,6 @@ function Todos({category, allTodos, setAllTodos}) {
     const [searchTask, setSearchTask] = useState("");
     const [tasksFound, setTasksFound] = useState([]);
 
-    console.log(searchTask);
   
     useEffect(()=>{
             if(category==="Tasks"){
@@ -140,13 +138,20 @@ function Todos({category, allTodos, setAllTodos}) {
         <ErrorAlert 
         showAlert={showAlert} 
         setShowAlert={setShowAlert}/>
-                
-        <TaskList 
+
+        {
+            filteredTodos.length > 0 ? <TaskList 
         todos={searchTask ? tasksFound : filteredTodos}
         setShowEditPane={setShowEditPane}
         setEditedTask={setEditedTask}
         saveEditedTask={saveEditedTask}
-        />
+        /> 
+        : <Box display="flex" alignItems="center" justifyContent="center" height="40vh">
+                <CircularProgress/>
+        </Box>
+        }
+                
+        
     </Box>
     {
         showEditPane && <EditTask 

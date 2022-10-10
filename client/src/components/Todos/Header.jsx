@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Stack, TextField, Typography} from "@mui/material";
 import DateFormatter from "./DateFormatter";
-import Sort from "./Sort";
+
 
 function Header({searchTask, category, setSearchTask, filteredTodos, setFilteredTodos}) {
 
@@ -21,11 +21,7 @@ function Header({searchTask, category, setSearchTask, filteredTodos, setFiltered
     value={searchTask}
     size="small" 
     label="Search Tasks" 
-    variant="outlined" />
-       <Sort 
-        filteredTodos={filteredTodos}
-        setFilteredTodos={setFilteredTodos}
-       />
+    variant="outlined"/>
     </Box>
 
 }
